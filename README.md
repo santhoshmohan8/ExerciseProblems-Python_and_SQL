@@ -1,1 +1,6 @@
-# ExerciseProblems-Python_and_SQL
+Machine Learning
+  Regression
+  Classification
+  Ensemble methods
+  Clustering
+  Dimensionality Reduction
