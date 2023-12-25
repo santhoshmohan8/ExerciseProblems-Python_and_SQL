@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Spam Email Classifier</title>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand"><h1>Spam Email Classifier</h1></a>
+      </div>
+    </nav>
+  </div>
+
+
+  <!-- Input form -->
+
+  <div class="container">
+    <h3 class="text-center mt-3">Paste your message here to check if it's Spam or Ham</h3>
+
+    <form action="/predict_webpage" method="POST">
+      <div class="form-floating">
+        <textarea class="form-control" id="email" name="email" style="height: 100px"></textarea>
+        <button class="w-100 btn btn-lg btn-primary">Submit</button>
+      </div>
+    </form>
+
+  </div>
+
+
+
+</body>
+
+</html>
