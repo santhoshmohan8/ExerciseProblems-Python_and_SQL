@@ -24,7 +24,8 @@ async def predict_text():
 
 @app.post ("/predict_json")
 async def predict_json(input_parameters):
-    input = json.loads(input_parameters.json())
+    input = input_parameters.json()
+    input = json.loads(input)
     X=list(input['Message'])
 
     data = feature_transform.transform(X)
@@ -32,8 +33,13 @@ async def predict_json(input_parameters):
     output = ['Spam Message' if prediction == 1 else 'Ham Message']
     return(output)
 
-# @app.get("/predict_json")
-# async def predict_json():
+# @app.post("/predict_json_2")
+# async def predict_json_2():
+#     return
+
+# @app.post("/predict_webpage")
+# async def predict_webpage():
+#     return
 
 
 # if __name__ == "__main__":
