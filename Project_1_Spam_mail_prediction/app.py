@@ -23,7 +23,7 @@ async def predict_text():
     return(output)
 
 @app.post ("/predict_json")
-async def predict_json(input_parameters):
+async def predict_json(input_parameters : str):
     input = input_parameters.json()
     input = json.loads(input)
     X=list(input['Message'])
