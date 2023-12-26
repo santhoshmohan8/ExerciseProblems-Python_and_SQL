@@ -21,7 +21,8 @@ async def root(req : Request):
 # output page
 @app.post("/predict_webpage") # method not allowed error
 async def predict_webpage(req : Request):
-    text = Request.form
+    text = req.form
+    print(req)
     input = list(text)
     data = feature_transform.transform(input)
     prediction = model.predict(data)
@@ -40,6 +41,7 @@ async def predict_text():
 @app.post ("/predict_json") # method not allowed error
 async def predict_json(input_parameters : str):
     input = input_parameters.json()
+    print(input)
     input = json.loads(input)
     X=list(input['Message'])
 
