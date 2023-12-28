@@ -14,23 +14,11 @@
     </nav>
   </div>
 
+    <h3 class="text-center mt-3">Paste your message here to check if it's Spam or Ham {{username}}</h3>
 
-  <!-- Input form -->
-
-  <div class="container">
-    <h3 class="text-center mt-3">Paste your message here to check if it's Spam or Ham</h3>
-
-    <form action="/predict_webpage" method="POST">
-      <div class="form-floating">
-        <textarea class="form-control" id="email" name="email" style="height: 100px"></textarea>
-        <button class="w-100 btn btn-lg btn-primary">Submit</button>
-      </div>
+    <form action="/predict_webpage" method="post">
+      <input type = "text" name="Email">
+      <input type = 'submit'>
     </form>
-
-  </div>
-
-
-
 </body>
-
 </html>

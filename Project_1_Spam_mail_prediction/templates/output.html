@@ -1,32 +1,10 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-    <title>Spam Email Classifier</title>
-  </head>
-  
-  <body>
-    <div class="container">
-      <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand"><h1>Spam Email Classifier</h1></a>
-        </div>
-      </nav>
-    </div>
-
-
-  <!-- Result -->
-  <div class="results">
-    {% if prediction==1 %}
-    <h1>Prediction: <span class='danger'> This is a SPAM message.</span></h1>
-    {% elif prediction==0 %}
-    <h1>Prediction: <span class='safe'> This is NOT a spam message.</span></h1>
-    {% endif %}
-  </div>
-
-
-
-
+<body>    
+  {% if Prediction==1 %}
+  <h1>Prediction: This is a SPAM message</h1>
+  {% elif Prediction==0 %}
+  <h1>Prediction: This is a HAM message</h1>
+  {% endif %}
 </body>
-
 </html>

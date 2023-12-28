@@ -1,9 +1,11 @@
-from fastapi import FastAPI, Request, templating, Body
+from fastapi import FastAPI, Request, templating, Form
+from fastapi.responses import HTMLResponse
 import pandas as pd
 import numpy as np
 import pickle
 import json
 from pydantic import BaseModel
+
 
 # app instance
 app = FastAPI()
@@ -21,18 +23,26 @@ class values(BaseModel):
     Message : str
 
 # index page
-@app.post("/") # index.html - DONE
+# @app.post("/{user_name}") # index.html - DONE
+# async def root(req : Request, user_name : str):
+#     return template.TemplateResponse(name='index.html', context={'request':req, 'username':user_name})
+
+
+# index page
+@app.get("/") # index.html - DONE
 async def root(req : Request):
     return template.TemplateResponse(name='index.html', context={'request':req})
 
 # output page
 @app.post("/predict_webpage") # method not allowed error
-async def predict_webpage(req : Request):
-    text = req.form
-    input = list(text)
+async def predict_webpage(req : Request, Email: str = Form(...)):
+    # print(type(Email))
+    input = []
+    input.append(Email)
     data = feature_transform.transform(input)
-    prediction = model.predict(data)
-    return template.TemplateResponse(name='output.html', prediction=prediction)
+    prediction = model.predict(data)[0]
+    # return f'Prediction : {prediction} message'
+    return template.TemplateResponse(name='output.html', context={'request':req, 'Prediction':prediction})
 
 @app.get ("/predict_text") # DONE
 async def predict_text():
@@ -44,12 +54,13 @@ async def predict_text():
     output = ['Spam Message' if prediction == 1 else 'Ham Message']
     return(output)
 
-@app.post ("/predict_json") # method not allowed error
-async def predict_json(input_parameters : values):
+@app.get ("/predict_json") # DONE
+async def pred_json(input_parameters : values):
     input = input_parameters.json()
-    print(input)
     input = json.loads(input)
-    X=list(input['Message'])
+    X=[]
+    X.append(input['Message'])
+    print(X)
 
     data = feature_transform.transform(X)
     prediction = model.predict(data)
