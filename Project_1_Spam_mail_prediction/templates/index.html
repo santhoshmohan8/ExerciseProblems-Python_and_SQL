@@ -1,24 +1,20 @@
 <!doctype html>
 <html lang="en">
+<head><title>Spam Email Classifier</title></head>
 
-<head>
-  <title>Spam Email Classifier</title>
-</head>
+<h1>Spam Email Classifier</h1>
+<h3>Paste your message here to check if it's Spam or Ham</h3>
 
-<body>
-  <div class="container">
-    <nav class="navbar navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand"><h1>Spam Email Classifier</h1></a>
-      </div>
-    </nav>
-  </div>
+<form action="/predict_webpage" method="post">
+  <input type = "text" name="Email">
+  <input type = 'submit'>
+</form>
+<br>
+<br>
+<h3>Upload as a file if you have more than 1 message</h3>
+<form action="/predict_file" method="post" enctype="multipart/form-data">
+  <input type = "file" name="file">
+  <input type = 'submit'>
+</form>
 
-    <h3 class="text-center mt-3">Paste your message here to check if it's Spam or Ham {{username}}</h3>
-
-    <form action="/predict_webpage" method="post">
-      <input type = "text" name="Email">
-      <input type = 'submit'>
-    </form>
-</body>
 </html>

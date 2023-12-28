@@ -1,11 +1,10 @@
-from fastapi import FastAPI, Request, templating, Form, Body
+from fastapi import FastAPI, Request, templating, Form, Body, UploadFile, File
 from fastapi.responses import HTMLResponse
 import pandas as pd
 import numpy as np
 import pickle
 import json
 from pydantic import BaseModel
-from typing import List
 
 
 # app instance
@@ -37,7 +36,6 @@ async def root(req : Request):
 # output page
 @app.post("/predict_webpage") # method not allowed error
 async def predict_webpage(req : Request, Email: str = Form(...)):
-    # print(type(Email))
     input = []
     input.append(Email)
     data = feature_transform.transform(input)
@@ -66,18 +64,16 @@ async def pred_json(input_parameters : values):
     output = ['Spam Message' if prediction == 1 else 'Ham Message']
     return(output)
 
-@app.get ("/predict_json_2") # DONE
-async def pred_json(input_parameters : values):
-    # input = input_parameters.json()
-    # input = json.loads(input)
-    print(1)
+@app.post ("/predict_file") # DONE
+async def pred_json(file : UploadFile = File(...)):
+    file_content = file.file.read().decode('utf-8')
+    msg = file_content.splitlines()
 
-    # X.append(input['Message'])
-    # data = feature_transform.transform(X)
-    # prediction = model.predict(data)
-    # output = ['Spam Message' if prediction == 1 else 'Ham Message']
-    # return(output)
-
+    data = feature_transform.transform(msg)
+    prediction = model.predict(data)
+    output = ['Spam Message' if item == 1 else 'Ham Message' for item in prediction]
+    df = pd.DataFrame(msg,output).reset_index(drop=False).rename(columns={'index':'Prediction',0:'Message'})
+    return HTMLResponse(df.to_html())
 
 
 # if __name__ == "__main__":
