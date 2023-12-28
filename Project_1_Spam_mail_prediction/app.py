@@ -1,6 +1,9 @@
-from fastapi import FastAPI, Request, templating
+from fastapi import FastAPI, Request, templating, Body
+import pandas as pd
+import numpy as np
 import pickle
 import json
+from pydantic import BaseModel
 
 # app instance
 app = FastAPI()
@@ -13,8 +16,12 @@ feature_transform = pickle.load(open('vector.pkl','rb'))
 
 template = templating.Jinja2Templates(directory='templates')
 
+# basemodel
+class values(BaseModel):
+    Message : str
+
 # index page
-@app.get("/") # index.html - DONE
+@app.post("/") # index.html - DONE
 async def root(req : Request):
     return template.TemplateResponse(name='index.html', context={'request':req})
 
@@ -22,7 +29,6 @@ async def root(req : Request):
 @app.post("/predict_webpage") # method not allowed error
 async def predict_webpage(req : Request):
     text = req.form
-    print(req)
     input = list(text)
     data = feature_transform.transform(input)
     prediction = model.predict(data)
@@ -39,7 +45,7 @@ async def predict_text():
     return(output)
 
 @app.post ("/predict_json") # method not allowed error
-async def predict_json(input_parameters : str):
+async def predict_json(input_parameters : values):
     input = input_parameters.json()
     print(input)
     input = json.loads(input)
@@ -49,11 +55,6 @@ async def predict_json(input_parameters : str):
     prediction = model.predict(data)
     output = ['Spam Message' if prediction == 1 else 'Ham Message']
     return(output)
-
-# @app.post("/predict_json_2")
-# async def predict_json_2():
-#     return
-
 
 
 
