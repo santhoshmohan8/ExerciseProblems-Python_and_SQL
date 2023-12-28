@@ -1,10 +1,11 @@
-from fastapi import FastAPI, Request, templating, Form
+from fastapi import FastAPI, Request, templating, Form, Body
 from fastapi.responses import HTMLResponse
 import pandas as pd
 import numpy as np
 import pickle
 import json
 from pydantic import BaseModel
+from typing import List
 
 
 # app instance
@@ -60,12 +61,22 @@ async def pred_json(input_parameters : values):
     input = json.loads(input)
     X=[]
     X.append(input['Message'])
-    print(X)
-
     data = feature_transform.transform(X)
     prediction = model.predict(data)
     output = ['Spam Message' if prediction == 1 else 'Ham Message']
     return(output)
+
+@app.get ("/predict_json_2") # DONE
+async def pred_json(input_parameters : values):
+    # input = input_parameters.json()
+    # input = json.loads(input)
+    print(1)
+
+    # X.append(input['Message'])
+    # data = feature_transform.transform(X)
+    # prediction = model.predict(data)
+    # output = ['Spam Message' if prediction == 1 else 'Ham Message']
+    # return(output)
 
 
 
