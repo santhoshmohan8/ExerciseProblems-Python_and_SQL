@@ -43,26 +43,26 @@ async def predict_webpage(req : Request, Email: str = Form(...)):
     # return f'Prediction : {prediction} message'
     return template.TemplateResponse(name='output.html', context={'request':req, 'Prediction':prediction})
 
-@app.get ("/predict_text") # DONE
-async def predict_text():
-    input = "You won $1000, click submit in your email inline to claim the reward "
-    X = []
-    X.append(input)
-    data = feature_transform.transform(X)
-    prediction = model.predict(data)
-    output = ['Spam Message' if prediction == 1 else 'Ham Message']
-    return(output)
+# @app.get ("/predict_text") # DONE
+# async def predict_text():
+#     input = "You won $1000, click submit in your email inline to claim the reward "
+#     X = []
+#     X.append(input)
+#     data = feature_transform.transform(X)
+#     prediction = model.predict(data)
+#     output = ['Spam Message' if prediction == 1 else 'Ham Message']
+#     return(output)
 
-@app.get ("/predict_json") # DONE
-async def pred_json(input_parameters : values):
-    input = input_parameters.json()
-    input = json.loads(input)
-    X=[]
-    X.append(input['Message'])
-    data = feature_transform.transform(X)
-    prediction = model.predict(data)
-    output = ['Spam Message' if prediction == 1 else 'Ham Message']
-    return(output)
+# @app.get ("/predict_json") # DONE
+# async def pred_json(input_parameters : values):
+#     input = input_parameters.json()
+#     input = json.loads(input)
+#     X=[]
+#     X.append(input['Message'])
+#     data = feature_transform.transform(X)
+#     prediction = model.predict(data)
+#     output = ['Spam Message' if prediction == 1 else 'Ham Message']
+#     return(output)
 
 @app.post ("/predict_file") # DONE
 async def pred_json(file : UploadFile = File(...)):
